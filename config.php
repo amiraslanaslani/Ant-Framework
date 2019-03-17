@@ -11,6 +11,7 @@ return [
         'routes' => 'App/Routes/',
         'controllers' => 'App/Controllers/',
         'loads' => 'Ant/Loads/',
+        'functions' => 'Ant/Functions/',
     ]
 ];
 ?>
