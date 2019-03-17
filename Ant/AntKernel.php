@@ -43,24 +43,41 @@ class AntKernel {
     }
 
     private function handleRequest(Request $request) : Response {
-        global $_ANT;
         $method = $request->getMethod();
         $url = $request->getUri()->getPath();
 
         // Detect Controller
+        $controller = $this->detectController($url, $method);
+        if($controller != null)
+            return $controller;
+
+        // Detect Public File
+        $public_file = $this->detectPublicFile($url, $method);
+        if($public_file != null)
+            return $public_file;
+
+        // Detect 404 Error!
+        return new Response(Status::OK, [
+            "content-type" => "text/plain; charset=utf-8"
+        ], "404!");
+    }
+
+    private function detectController($url, $method){
         $match = $this->router->match($url, $method);
 
-        \var_dump($match);
         if( is_array($match) ) {
             $response = $this->callTarget($match['target'], $match['params']);
-            \var_dump($response);
         	$response = $this->convertControllerResponseToServersOne(
                 $response
             );
             return $response;
         }
+        return null;
+    }
 
-        // Detect Public File
+    private function detectPublicFile($url, $method){
+        global $_ANT;
+
         $file = $_ANT['CONFIG']['paths']['public'] . $url;
         if(file_exists($file)){
             $type = $this->find_file_mime_type($file);
@@ -68,11 +85,7 @@ class AntKernel {
                 "content-type" => "{$type}; charset=utf-8"
             ], file_get_contents($file));
         }
-
-        // Detect 404 Error!
-        return new Response(Status::OK, [
-            "content-type" => "text/plain; charset=utf-8"
-        ], "404!");
+        return null;
     }
 
     private function callTarget($target, $params){

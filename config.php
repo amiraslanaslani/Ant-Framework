@@ -7,7 +7,7 @@ return [
         ]
     ],
     'paths' => [
-        'public' => 'Public/',
+        'public' => 'App/Public/',
         'routes' => 'App/Routes/',
         'controllers' => 'App/Controllers/',
         'loads' => 'Ant/Loads/',
