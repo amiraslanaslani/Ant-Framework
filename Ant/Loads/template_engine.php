@@ -11,7 +11,8 @@ $loader = new \Twig\Loader\FilesystemLoader([
 ]);
 
 $twig = new \Twig\Environment($loader, [
-    'cache' => $_ANT['BASE'] . $_ANT['CONFIG']['paths']['caches']['templates'],
+    'cache' => $_ANT['CONFIG']['debug'] ? false : $_ANT['BASE'] . $_ANT['CONFIG']['paths']['caches']['templates'],
+    'debug' => $_ANT['CONFIG']['debug'],
 ]);
 
 return $twig;

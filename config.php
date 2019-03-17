@@ -1,11 +1,14 @@
 <?php
 return [
+    'debug' => true,
+
     'server' => [
         'listen' => [
             "0.0.0.0:1337", // IPv4
             "[::]:1337" // IPv6
-        ]
+        ],
     ],
+
     'paths' => [
         'public' => 'App/Public/',
         'routes' => 'App/Routes/',
@@ -18,7 +21,8 @@ return [
 
         'caches' => [
             'templates' => 'Cache/Twig/' // Passed To Twig
-        ]
+        ],
+
     ]
 ];
 ?>
