@@ -5,7 +5,7 @@ $files = glob($_ANT['BASE'] . $_ANT['CONFIG']['paths']['controllers'] . '/*.php'
 $instances = [];
 
 foreach ($files as $controller_file) {
-    require($controller_file);
+    require_once($controller_file);
 
     $sep = explode($_ANT['CONFIG']['paths']['controllers'], $controller_file);
     $controller_name =  trim(

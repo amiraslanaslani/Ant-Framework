@@ -9,15 +9,22 @@ use Ant\AntKernel;
 class RunAnt extends Command
 {
     protected static $defaultName = 'app:run';
+    protected $request_handlers = [];
 
-    protected function configure()
-    {
+    protected function configure(){
+        $this->request_handlers = [
+            new \Ant\RequestHandlers\ControllerRequestHandler,
+            new \Ant\RequestHandlers\PublicFileRequestHandler,
+            new \Ant\RequestHandlers\PageNotFoundRequestHandler,
 
+        ];
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $kernel = new AntKernel();
+        foreach($this->request_handlers as $rh)
+            $kernel->addRequestHandler($rh);
         $kernel->listen();
     }
 }
