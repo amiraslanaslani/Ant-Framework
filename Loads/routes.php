@@ -1,5 +1,7 @@
 <?php
-$files = glob(__DIR__ . '/../SRC/Routes/*.php');
+global $_ANT;
+
+$files = glob(__DIR__ . '/../' . $_ANT['CONFIG']['paths']['routes'] . '/*.php');
 $routes = [];
 
 foreach ($files as $file) {
@@ -9,5 +11,5 @@ foreach ($files as $file) {
         $routes = array_merge($routes, $routes_list);
     }
 }
-// var_dump($routes);
+
 return $routes;

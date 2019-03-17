@@ -14,8 +14,8 @@ class AntKernel {
 
     public function __construct(){
         global $_ANT;
+        $this->controllers = require('Loads/controllers.php');
         $this->router = require('Loads/router.php');
-
     }
 
     public function listen(){
@@ -49,8 +49,11 @@ class AntKernel {
 
         // Detect Controller
         $match = $this->router->match($url, $method);
-        if( is_array($match) && is_callable( $match['target'] ) ) {
-            $response = $match['target']();
+
+        \var_dump($match);
+        if( is_array($match) ) {
+            $response = $this->callTarget($match['target'], $match['params']);
+            \var_dump($response);
         	$response = $this->convertControllerResponseToServersOne(
                 $response
             );
@@ -70,6 +73,22 @@ class AntKernel {
         return new Response(Status::OK, [
             "content-type" => "text/plain; charset=utf-8"
         ], "404!");
+    }
+
+    private function callTarget($target, $params){
+        if(is_callable( $target )) {
+            return $target();
+        }
+        else {
+            $call = \explode('@', $target);
+            return \call_user_func_array(
+                [
+                    $this->controllers[$call[0]], // Controller Instance
+                    $call[1] // Method Name
+                ],
+                $params
+            );
+        }
     }
 
     private function convertControllerResponseToServersOne($response){

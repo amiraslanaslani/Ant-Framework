@@ -7,7 +7,10 @@ return [
         ]
     ],
     'paths' => [
-        'public' => 'public/',
+        'public' => 'Public/',
+        'routes' => 'App/Routes/',
+        'controllers' => 'App/Controllers/',
+
     ]
 ];
 ?>
