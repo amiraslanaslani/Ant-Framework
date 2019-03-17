@@ -14,8 +14,8 @@ class AntKernel {
 
     public function __construct(){
         global $_ANT;
-        $this->controllers = require('Loads/controllers.php');
-        $this->router = require('Loads/router.php');
+        $this->controllers = require($_ANT['CONFIG']['paths']['loads'] . '/controllers.php');
+        $this->router = require($_ANT['CONFIG']['paths']['loads'] . '/router.php');
     }
 
     public function listen(){

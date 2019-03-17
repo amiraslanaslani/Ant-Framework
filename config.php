@@ -10,7 +10,7 @@ return [
         'public' => 'Public/',
         'routes' => 'App/Routes/',
         'controllers' => 'App/Controllers/',
-
+        'loads' => 'Ant/Loads/',
     ]
 ];
 ?>

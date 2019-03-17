@@ -6,5 +6,5 @@ spl_autoload_register(function($class_name){
 });
 
 $_ANT['CONFIG'] = require('config.php');
-
+$_ANT['BASE'] = __DIR__ . '/../';
 ?>

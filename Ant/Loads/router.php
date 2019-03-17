@@ -1,7 +1,8 @@
 <?php
+global $_ANT;
 
 $router = new \AltoRouter();
-$routes = require('Loads/routes.php');
+$routes = require($_ANT['CONFIG']['paths']['loads'] . '/routes.php');
 
 // Add Routes to Router
 foreach($routes as $route){

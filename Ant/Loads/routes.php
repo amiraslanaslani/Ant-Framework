@@ -1,7 +1,7 @@
 <?php
 global $_ANT;
 
-$files = glob(__DIR__ . '/../' . $_ANT['CONFIG']['paths']['routes'] . '/*.php');
+$files = glob($_ANT['BASE'] . $_ANT['CONFIG']['paths']['routes'] . '/*.php');
 $routes = [];
 
 foreach ($files as $file) {
