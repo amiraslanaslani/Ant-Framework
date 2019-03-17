@@ -1,4 +1,5 @@
 composer.phar
 /vendor/
-App/Public
+/App/Public
 .idea
+/Cache/Twig/

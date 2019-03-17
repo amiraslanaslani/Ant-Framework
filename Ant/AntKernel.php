@@ -36,6 +36,10 @@ class AntKernel {
                 new NullLogger
             );
 
+            $server->setErrorHandler(
+                new \Ant\Server\AntErrorHandler()
+            );
+
             yield $server->start();
 
             \Amp\Loop::onSignal(SIGINT, function (string $watcherId) use ($server) {

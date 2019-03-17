@@ -16,4 +16,8 @@ foreach ($files as $file) {
     require_once($file);
 }
 
+// Set Constants
+$_ANT['TEMPLATE_ENGINE'] = \Ant\Functions\load('template_engine');
+
+
 ?>
