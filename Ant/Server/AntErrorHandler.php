@@ -25,6 +25,12 @@ final class AntErrorHandler implements ErrorHandler {
 
     /** {@inheritdoc} */
     public function handleError(int $statusCode, string $reason = null, Request $request = null): Promise {
+        // try{
+        //     throw new \Exception();
+        // }
+        // catch(\Exception $e){
+        //     echo $e->getTraceAsString();
+        // }
 
         $output = $this->template_engine->render('server.error.html', [
             'error' => [

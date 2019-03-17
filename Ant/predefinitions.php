@@ -19,5 +19,4 @@ foreach ($files as $file) {
 // Set Constants
 $_ANT['TEMPLATE_ENGINE'] = \Ant\Functions\load('template_engine');
 
-
 ?>

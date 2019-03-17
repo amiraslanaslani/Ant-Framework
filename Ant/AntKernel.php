@@ -52,13 +52,18 @@ class AntKernel {
     private function handleRequest(Request $request) : Response {
         $method = $request->getMethod();
         $url = $request->getUri()->getPath();
-
-        foreach ($this->request_handlers as $key => $request_handler) {
-
-            $response = $request_handler->detect($url, $method);
-            \var_dump($response);
-            if($response != null)
-                return $response;
+        try{
+            foreach ($this->request_handlers as $key => $request_handler) {
+                $response = $request_handler->detect($url, $method);
+                if($response != null)
+                    return $response;
+            }
+        }
+        catch(ServerException $e){
+            return $e->getResponse();
+        }
+        catch(\Exception $e){
+            echo $e->getTraceAsString();
         }
     }
 

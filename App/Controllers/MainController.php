@@ -8,7 +8,7 @@ use Amp\Http\Status;
 class MainController extends Controller {
 
     public function __construct(){
-        echo 'MainController is constructed!';
+        // echo 'MainController is constructed!';
     }
 
     public function main() {

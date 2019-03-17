@@ -3,6 +3,7 @@ namespace Ant\RequestHandlers;
 
 use Ant\RequestHandler;
 use Amp\Http\Server\Response;
+use Ant\Exceptions\CodeException;
 
 class ControllerRequestHandler implements RequestHandler {
     public function __construct(){
@@ -29,6 +30,11 @@ class ControllerRequestHandler implements RequestHandler {
         }
         else {
             $call = \explode('@', $target);
+
+            if(! isset($this->controllers[$call[0]])){
+                throw new CodeException("Controller {$call[0]} is not exists!", 500);
+            }
+
             return \call_user_func_array(
                 [
                     $this->controllers[$call[0]], // Controller Instance

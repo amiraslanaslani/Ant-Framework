@@ -10,9 +10,7 @@ class PageNotFoundRequestHandler implements RequestHandler {
     }
 
     public function detect($url, $method) : ? Response {
-        return new Response(Status::OK, [
-            "content-type" => "text/plain; charset=utf-8"
-        ], "404!");
+        throw new \Ant\Exceptions\CodeException("Page not found!", 404);
     }
 
 }
