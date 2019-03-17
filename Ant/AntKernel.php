@@ -13,6 +13,8 @@ use Psr\Log\NullLogger;
 class AntKernel {
 
     public function __construct(){
+        global $_ANT;
+        $this->router = require('Loads/router.php');
 
     }
 
@@ -20,6 +22,7 @@ class AntKernel {
         global $_ANT;
 
         \Amp\Loop::run(function () {
+            global $_ANT;
             $sockets = [];
 
             foreach($_ANT['CONFIG']['server']['listen'] as $ips){
@@ -40,10 +43,26 @@ class AntKernel {
     }
 
     private function handleRequest(Request $request) : Response {
+        $method = $request->getMethod();
+        $url = $request->getUri()->getPath();
+        $match = $this->router->match($url, $method);
+        // \var_dump($match);
+        if( is_array($match) && is_callable( $match['target'] ) ) {
+            $response = $match['target']();
+        	$response = $this->convertControllerResponseToServersOne(
+                $response
+            );
+            return $response;
+        }
+        echo 1;
 
         return new Response(Status::OK, [
             "content-type" => "text/plain; charset=utf-8"
-        ], "Hello, World!");
+        ], "404!");
+    }
+
+    private function convertControllerResponseToServersOne($response){
+        return $response;
     }
 
 }
