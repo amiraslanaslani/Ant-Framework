@@ -7,9 +7,9 @@ use Amp\Http\Status;
 use Ant\MiddleResponse;
 use Ant\VarDumper;
 
-function dump_html($var, $cli = false){
+function dump_html($var){
     return html(
-        VarDumper::html($var, $cli)
+        VarDumper::html($var)
     );
 }
 

@@ -5,6 +5,9 @@ use Ant\RequestHandler;
 use Amp\Http\Server\Response;
 use Ant\Exceptions\CodeException;
 use Ant\MiddleResponse;
+use Amp\Http\Server\Request;
+use Ant\InputAllocator\InputAllocator;
+use Ant\InputAllocator\Input;
 
 class ControllerRequestHandler implements RequestHandler {
     public function __construct(){
@@ -12,10 +15,10 @@ class ControllerRequestHandler implements RequestHandler {
         $this->router = \Ant\Functions\load('router');
     }
 
-    public function detect($url, $method) : ?Response {
+    public function detect($url, $method, $request) : ? Response {
         $match = $this->router->match($url, $method);
         if( is_array($match) ) {
-            $response = $this->callTarget($match['target'], $match['params']);
+            $response = $this->callTarget($match['target'], $match['params'], $request);
             $response = $this->convertControllerResponseToServersOne(
                 $response
             );
@@ -24,7 +27,7 @@ class ControllerRequestHandler implements RequestHandler {
         return null;
     }
 
-    protected function callTarget($target, $params){
+    protected function callTarget($target, $params, Request $request){
         $this->controllers = \Ant\Functions\load('controllers');
         if(is_callable( $target )) {
             return $target();
@@ -35,6 +38,19 @@ class ControllerRequestHandler implements RequestHandler {
             if(! isset($this->controllers[$call[0]])){
                 throw new CodeException("Controller {$call[0]} is not exists!", 500);
             }
+
+            $input_alloc = new InputAllocator();
+            $input_alloc->setMethod(
+                get_class($this->controllers[$call[0]]),
+                $call[1]
+            );
+            $input_alloc->parseArray($params);
+
+            $request_input = new Input($request);
+            $request_input->addBound(Input::TYPE, 'Amp\Http\Server\Request');
+
+            $input_alloc->addInput($request_input);
+            $params = $input_alloc->getParameters();
 
             $result = \call_user_func_array(
                 [

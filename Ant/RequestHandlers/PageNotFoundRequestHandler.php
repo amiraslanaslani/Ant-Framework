@@ -9,7 +9,7 @@ class PageNotFoundRequestHandler implements RequestHandler {
     public function __construct(){
     }
 
-    public function detect($url, $method) : ? Response {
+    public function detect($url, $method, $request) : ? Response {
         throw new \Ant\Exceptions\CodeException("Page not found!", 404);
     }
 

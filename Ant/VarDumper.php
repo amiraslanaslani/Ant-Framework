@@ -22,10 +22,7 @@ class VarDumper{
         return (self::$handler)($var);
     }
 
-    public static function html($var, $cli = false){
-        if($cli)
-            self::cli($var);
-            
+    public static function html($var){
         ob_start();
         self::dump(
             $var,

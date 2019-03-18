@@ -9,7 +9,7 @@ class PublicFileRequestHandler implements RequestHandler {
     public function __construct(){
     }
 
-    public function detect($url, $method) : ? Response {
+    public function detect($url, $method, $request) : ? Response {
         global $_ANT;
 
         $file = $_ANT['CONFIG']['paths']['public'] . $url;

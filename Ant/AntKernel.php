@@ -53,7 +53,7 @@ class AntKernel {
         $url = $request->getUri()->getPath();
         try{
             foreach ($this->request_handlers as $key => $request_handler) {
-                $response = $request_handler->detect($url, $method);
+                $response = $request_handler->detect($url, $method, $request);
                 if($response != null)
                     return $response;
             }
@@ -62,6 +62,7 @@ class AntKernel {
             return $e->getResponse();
         }
         catch(\Exception $e){
+            echo $e->getMessage() . "\n\r";
             echo $e->getTraceAsString();
         }
     }
