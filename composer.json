@@ -4,5 +4,8 @@
         "amphp/http-server": "^1.0",
         "altorouter/altorouter": "^1.2",
         "twig/twig": "^2.7"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^4.2"
     }
 }

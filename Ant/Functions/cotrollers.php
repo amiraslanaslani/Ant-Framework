@@ -5,6 +5,13 @@ namespace App\Controller;
 use Amp\Http\Server\Response;
 use Amp\Http\Status;
 use Ant\MiddleResponse;
+use Ant\VarDumper;
+
+function dump_html($var, $cli = false){
+    return html(
+        VarDumper::html($var, $cli)
+    );
+}
 
 function view($file, $input = [], $status = Status::OK) : MiddleResponse {
     global $_ANT;
@@ -40,6 +47,16 @@ function text($data, $status = Status::OK) : MiddleResponse {
         $status,
         [
             "content-type" => "text/plain; charset=utf-8"
+        ],
+        $data
+    );
+}
+
+function html($data, $status = Status::OK) : MiddleResponse {
+    return MiddleResponse::create(
+        $status,
+        [
+            "content-type" => "text/html; charset=utf-8"
         ],
         $data
     );
