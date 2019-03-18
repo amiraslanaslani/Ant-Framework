@@ -19,7 +19,6 @@ class AntKernel {
     }
 
     public function listen(){
-        global $_ANT;
 
         \Amp\Loop::run(function () {
             global $_ANT;
@@ -65,6 +64,11 @@ class AntKernel {
         catch(\Exception $e){
             echo $e->getTraceAsString();
         }
+    }
+
+    public function runningOn(){
+        global $_ANT;
+        return $_ANT['CONFIG']['server']['listen'];
     }
 
 }

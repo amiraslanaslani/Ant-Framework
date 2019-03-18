@@ -25,7 +25,19 @@ class RunAnt extends Command
         $kernel = new AntKernel();
         foreach($this->request_handlers as $rh)
             $kernel->addRequestHandler($rh);
+
+        $formatter = $this->getHelper('formatter');
+        $messages = ['Ant is running...', 'Application is running on: '];
+        foreach($kernel->runningOn() as $ro)
+            $messages[] = "\t" . $ro;
+        $messages[] = '';
+
+        $formattedBlock = $formatter->formatBlock($messages, 'info');
+        $output->writeln($formattedBlock);
+
         $kernel->listen();
+
+
     }
 }
 
